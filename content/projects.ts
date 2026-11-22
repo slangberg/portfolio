@@ -1,6 +1,10 @@
 /**
- * Portfolio projects rendered on /projects. Mark a few as `featured`
- * to show them on the home page.
+ * Projects shown on /projects and the home page.
+ *
+ * Your pinned GitHub repos (from `githubUsername` in content/site.ts) are
+ * listed automatically, so you don't need to repeat them here. Use this list
+ * for anything that isn't a pinned repo: client work, private projects,
+ * talks, or live sites.
  */
 
 export type Project = {
@@ -10,43 +14,18 @@ export type Project = {
   tags: string[]
   href?: string
   repo?: string
-  featured?: boolean
+  // Filled in automatically for pinned GitHub repos.
+  language?: { name: string; color: string | null }
+  stars?: number
+  forks?: number
 }
 
 export const projects: Project[] = [
-  {
-    title: 'Realtime Dashboard',
-    description:
-      'Streaming analytics dashboard with live charts, saved views, and role-based sharing.',
-    year: '2025',
-    tags: ['Next.js', 'WebSockets', 'PostgreSQL'],
-    href: 'https://example.com',
-    repo: 'https://github.com/your-handle/realtime-dashboard',
-    featured: true,
-  },
-  {
-    title: 'Design System',
-    description:
-      'Accessible component library built on Radix primitives and Tailwind, documented with live examples.',
-    year: '2024',
-    tags: ['React', 'Radix', 'Tailwind CSS'],
-    repo: 'https://github.com/your-handle/design-system',
-    featured: true,
-  },
-  {
-    title: 'CLI Toolkit',
-    description:
-      'A small set of command-line tools for scaffolding and linting TypeScript monorepos.',
-    year: '2023',
-    tags: ['Node.js', 'TypeScript'],
-    repo: 'https://github.com/your-handle/cli-toolkit',
-  },
-  {
-    title: 'Recipe Planner',
-    description:
-      'Weekly meal planner that builds a shopping list from the recipes you pick.',
-    year: '2022',
-    tags: ['React Native', 'SQLite'],
-    href: 'https://example.com',
-  },
+  // {
+  //   title: 'Client dashboard',
+  //   description: 'Analytics dashboard built for Acme Corp.',
+  //   year: '2025',
+  //   tags: ['Next.js', 'PostgreSQL'],
+  //   href: 'https://example.com',
+  // },
 ]

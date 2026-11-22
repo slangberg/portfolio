@@ -1,5 +1,9 @@
 import type { Metadata } from 'next'
-import { projects } from '@/content/projects'
+import { ArrowUpRight } from 'lucide-react'
+
+import { siteConfig } from '@/content/site'
+import { getAllProjects } from '@/lib/github'
+import { Button } from '@/components/ui/button'
 import { PageHeader } from '@/components/site/section-heading'
 import { ProjectCard } from '@/components/site/project-card'
 
@@ -8,15 +12,37 @@ export const metadata: Metadata = {
   description: 'Selected work and side projects.',
 }
 
-export default function ProjectsPage() {
+// Re-fetch pinned repos from GitHub once a day (see lib/github.ts).
+export const revalidate = 86400
+
+export default async function ProjectsPage() {
+  const projects = await getAllProjects()
+
   return (
     <section>
-      <PageHeader title="Projects" description="Selected work and side projects." />
+      <PageHeader
+        title="Projects"
+        description="Selected work and side projects, pinned on my GitHub profile."
+      />
       <div className="grid gap-4 sm:grid-cols-2">
         {projects.map((project) => (
-          <ProjectCard key={project.title} project={project} />
+          <ProjectCard key={project.repo ?? project.title} project={project} />
         ))}
       </div>
+      {siteConfig.githubUsername && (
+        <div className="mt-8 flex justify-center">
+          <Button asChild variant="outline">
+            <a
+              href={`https://github.com/${siteConfig.githubUsername}?tab=repositories`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              All repositories on GitHub
+              <ArrowUpRight data-icon="inline-end" />
+            </a>
+          </Button>
+        </div>
+      )}
     </section>
   )
 }

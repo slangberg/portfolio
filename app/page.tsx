@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { ArrowRight, FileText, MapPin } from 'lucide-react'
 
 import { siteConfig } from '@/content/site'
-import { projects } from '@/content/projects'
+import { getAllProjects } from '@/lib/github'
 import { experience } from '@/content/resume'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -12,8 +12,11 @@ import { ProjectCard } from '@/components/site/project-card'
 import { SectionHeading } from '@/components/site/section-heading'
 import { SocialLinks } from '@/components/site/social-links'
 
-export default function HomePage() {
-  const featured = projects.filter((p) => p.featured).slice(0, 2)
+// Re-fetch pinned repos from GitHub once a day (see lib/github.ts).
+export const revalidate = 86400
+
+export default async function HomePage() {
+  const featured = (await getAllProjects()).slice(0, 4)
   const current = experience[0]
 
   return (
@@ -65,7 +68,7 @@ export default function HomePage() {
 
       {featured.length > 0 && (
         <section>
-          <SectionHeading title="Featured projects" href="/projects" />
+          <SectionHeading title="Pinned projects" href="/projects" />
           <div className="grid gap-4 sm:grid-cols-2">
             {featured.map((project) => (
               <ProjectCard key={project.title} project={project} />

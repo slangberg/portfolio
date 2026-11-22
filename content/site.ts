@@ -24,8 +24,10 @@ export const siteConfig = {
   description:
     'Software engineer building fast, accessible products for the web. I write about the tools and ideas I use every day.',
   baseUrl: resolveBaseUrl(),
+  /** Pinned repos from this GitHub profile are shown on /projects and the home page. */
+  githubUsername: 'slangberg',
   links: {
-    github: 'https://github.com/your-handle',
+    github: 'https://github.com/slangberg',
     linkedin: 'https://www.linkedin.com/in/your-handle',
     x: '',
   },

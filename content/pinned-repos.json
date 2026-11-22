@@ -1,0 +1,58 @@
+[
+  {
+    "name": "MUI-SVG-Icons",
+    "description": "Template to create icons for MUI 5",
+    "url": "https://github.com/slangberg/MUI-SVG-Icons",
+    "homepageUrl": null,
+    "stars": 0,
+    "forks": 0,
+    "language": {
+      "name": "TypeScript",
+      "color": "#3178c6"
+    },
+    "topics": [],
+    "pushedAt": "2024-05-29T03:21:23Z"
+  },
+  {
+    "name": "typescript-dynamic-module-federation",
+    "description": "A helper/examples of webpack's new module federation API",
+    "url": "https://github.com/slangberg/typescript-dynamic-module-federation",
+    "homepageUrl": null,
+    "stars": 0,
+    "forks": 0,
+    "language": {
+      "name": "TypeScript",
+      "color": "#3178c6"
+    },
+    "topics": [],
+    "pushedAt": "2021-03-23T15:59:01Z"
+  },
+  {
+    "name": "claude-d3-map-project",
+    "description": "The mapping application built with the help of claude code",
+    "url": "https://github.com/slangberg/claude-d3-map-project",
+    "homepageUrl": null,
+    "stars": 0,
+    "forks": 0,
+    "language": {
+      "name": "TypeScript",
+      "color": "#3178c6"
+    },
+    "topics": [],
+    "pushedAt": "2026-05-26T19:34:53Z"
+  },
+  {
+    "name": "pokedex-nextjs",
+    "description": "A stylish clone of the Gen 1 pokedex from the pokemon",
+    "url": "https://github.com/slangberg/pokedex-nextjs",
+    "homepageUrl": "https://pokedex-nextjs-ten-pi.vercel.app",
+    "stars": 0,
+    "forks": 0,
+    "language": {
+      "name": "TypeScript",
+      "color": "#3178c6"
+    },
+    "topics": [],
+    "pushedAt": "2026-11-16T02:38:03Z"
+  }
+]

@@ -23,6 +23,22 @@ All of the content lives in `content/`:
 | `content/projects.ts` | Projects (`featured: true` puts a project on the home page)      |
 | `content/posts/*.mdx` | Blog posts (frontmatter: `title`, `publishedAt`, `summary`, `tags`) |
 
+### Pinned GitHub projects
+
+`/projects` and the home page list the repos pinned on the GitHub profile set
+in `githubUsername` (`content/site.ts`), followed by any extra entries in
+`content/projects.ts`. Repos show their description, language, stars and forks,
+plus a **Live site** button when the repo has a homepage URL set.
+
+GitHub only exposes pinned repos through its GraphQL API, which needs a token:
+
+- **With `GITHUB_TOKEN` set** (for example as a Vercel environment variable),
+  pins are fetched at build time and refreshed once a day. A fine-grained token
+  with **no permissions** is enough, because the repos are public.
+- **Without it**, the site uses the snapshot in `content/pinned-repos.json`.
+  Refresh the snapshot with `npm run sync:pinned` (uses `gh auth token` if
+  `GITHUB_TOKEN` isn't set) and commit it.
+
 Put images such as an avatar or a resume PDF in `public/`, then point to them
 from the config.
 

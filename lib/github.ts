@@ -120,10 +120,31 @@ export function repoToProject(repo: PinnedRepo): Project {
   }
 }
 
-/** Pinned GitHub repos first, then any extra projects from content/projects.ts. */
+/**
+ * Featured projects from content/projects.ts, then pinned GitHub repos, then
+ * the remaining projects. An entry in content/projects.ts whose `repo` matches
+ * a pinned repo is merged into that repo's card instead of listed separately.
+ */
 export async function getAllProjects(): Promise<Project[]> {
   const { projects } = await import('@/content/projects')
-  const pinned = (await getPinnedRepos()).map(repoToProject)
-  const pinnedUrls = new Set(pinned.map((p) => p.repo))
-  return [...pinned, ...projects.filter((p) => !p.repo || !pinnedUrls.has(p.repo))]
+  const key = (url?: string) => url?.toLowerCase().replace(/\/+$/, '')
+  const overrides = new Map(
+    projects.filter((p) => p.repo).map((p) => [key(p.repo), p])
+  )
+
+  const pinned = (await getPinnedRepos()).map((repo) => {
+    const project = repoToProject(repo)
+    const override = overrides.get(key(project.repo))
+    if (!override) return project
+    overrides.delete(key(project.repo))
+    return { ...project, ...override, tags: override.tags.length ? override.tags : project.tags }
+  })
+
+  const merged = new Set(pinned.map((p) => key(p.repo)))
+  const extras = projects.filter((p) => !p.repo || !merged.has(key(p.repo)))
+  return [
+    ...extras.filter((p) => p.featured),
+    ...pinned,
+    ...extras.filter((p) => !p.featured),
+  ]
 }

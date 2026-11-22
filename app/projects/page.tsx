@@ -22,11 +22,16 @@ export default async function ProjectsPage() {
     <section>
       <PageHeader
         title="Projects"
-        description="Selected work and side projects, pinned on my GitHub profile."
+        description="Selected work and side projects, including the repos pinned on my GitHub profile."
       />
       <div className="grid gap-4 sm:grid-cols-2">
-        {projects.map((project) => (
-          <ProjectCard key={project.repo ?? project.title} project={project} />
+        {projects.map((project, i) => (
+          <ProjectCard
+            key={project.repo ?? project.title}
+            project={project}
+            // With an odd count, let the first card span both columns.
+            className={i === 0 && projects.length % 2 === 1 ? 'sm:col-span-2' : undefined}
+          />
         ))}
       </div>
       {siteConfig.githubUsername && (

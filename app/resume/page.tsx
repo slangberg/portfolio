@@ -2,7 +2,15 @@ import type { Metadata } from 'next'
 import { Download, Mail, MapPin } from 'lucide-react'
 
 import { siteConfig } from '@/content/site'
-import { education, experience, resumePdf, skills, summary } from '@/content/resume'
+import {
+  earlierExperience,
+  education,
+  experience,
+  personalProjects,
+  resumePdf,
+  skills,
+  summary,
+} from '@/content/resume'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -130,11 +138,35 @@ export default function ResumePage() {
         </ol>
       </ResumeSection>
 
+      {earlierExperience.length > 0 && (
+        <ResumeSection title="Earlier">
+          <ul className="space-y-3">
+            {earlierExperience.map((job) => (
+              <li key={`${job.company}-${job.start}`} className="space-y-1">
+                <div className="flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline">
+                  <div>
+                    <h3 className="font-medium">{job.role}</h3>
+                    <p className="text-muted-foreground">
+                      {job.company}
+                      {job.location && ` · ${job.location}`}
+                    </p>
+                  </div>
+                  <p className="shrink-0 text-sm text-muted-foreground tabular-nums">
+                    {job.start} — {job.end}
+                  </p>
+                </div>
+                <p className="text-sm">{job.description}</p>
+              </li>
+            ))}
+          </ul>
+        </ResumeSection>
+      )}
+
       <ResumeSection title="Skills">
         <dl className="space-y-3">
           {Object.entries(skills).map(([group, items]) => (
             <div key={group} className="flex flex-col gap-1.5 sm:flex-row sm:gap-4">
-              <dt className="w-24 shrink-0 text-sm font-medium">{group}</dt>
+              <dt className="w-36 shrink-0 text-sm font-medium">{group}</dt>
               <dd className="flex flex-wrap gap-1">
                 {items.map((skill) => (
                   <Badge key={skill} variant="outline">
@@ -160,12 +192,35 @@ export default function ResumePage() {
                 {edu.notes && <p className="text-sm text-muted-foreground">{edu.notes}</p>}
               </div>
               <p className="shrink-0 text-sm text-muted-foreground tabular-nums">
-                {edu.start} — {edu.end}
+                {edu.start ? `${edu.start} — ${edu.end}` : edu.end}
               </p>
             </li>
           ))}
         </ul>
       </ResumeSection>
+
+      {personalProjects.length > 0 && (
+        <ResumeSection title="Projects">
+          <ul className="space-y-3">
+            {personalProjects.map((project) => (
+              <li key={project.name} className="space-y-1">
+                <h3 className="font-medium">
+                  {project.name}{' '}
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-normal text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
+                  >
+                    {project.urlLabel}
+                  </a>
+                </h3>
+                <p className="text-sm">{project.description}</p>
+              </li>
+            ))}
+          </ul>
+        </ResumeSection>
+      )}
     </div>
   )
 }

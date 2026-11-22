@@ -16,13 +16,13 @@ import { SocialLinks } from '@/components/site/social-links'
 export const revalidate = 86400
 
 export default async function HomePage() {
-  const featured = (await getAllProjects()).slice(0, 4)
+  const featured = (await getAllProjects()).slice(0, 6)
   const current = experience[0]
 
   return (
     <div className="space-y-16">
       <section className="space-y-6">
-        <Avatar className="size-16">
+        <Avatar className="size-20">
           {siteConfig.avatar && (
             <AvatarImage src={siteConfig.avatar} alt={siteConfig.name} />
           )}
@@ -68,10 +68,15 @@ export default async function HomePage() {
 
       {featured.length > 0 && (
         <section>
-          <SectionHeading title="Pinned projects" href="/projects" />
+          <SectionHeading title="Projects" href="/projects" />
           <div className="grid gap-4 sm:grid-cols-2">
-            {featured.map((project) => (
-              <ProjectCard key={project.title} project={project} />
+            {featured.map((project, i) => (
+              <ProjectCard
+                key={project.repo ?? project.title}
+                project={project}
+                // With an odd count, let the first card span both columns.
+                className={i === 0 && featured.length % 2 === 1 ? 'sm:col-span-2' : undefined}
+              />
             ))}
           </div>
         </section>

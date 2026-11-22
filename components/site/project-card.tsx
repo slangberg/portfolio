@@ -1,5 +1,6 @@
-import { ArrowUpRight, GitFork, Star } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, GitFork, Star } from 'lucide-react'
 
+import { cn } from '@/lib/utils'
 import type { Project } from '@/content/projects'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -14,11 +15,17 @@ import {
 } from '@/components/ui/card'
 import { GitHubIcon } from './icons'
 
-export function ProjectCard({ project }: { project: Project }) {
+export function ProjectCard({
+  project,
+  className,
+}: {
+  project: Project
+  className?: string
+}) {
   const hasMeta = project.language || !!project.stars || !!project.forks
 
   return (
-    <Card className="h-full">
+    <Card className={cn('h-full', className)}>
       <CardHeader>
         <CardTitle className="break-words">{project.title}</CardTitle>
         <CardAction className="text-xs text-muted-foreground tabular-nums">
@@ -75,9 +82,20 @@ export function ProjectCard({ project }: { project: Project }) {
         <CardFooter className="mt-auto gap-2">
           {project.href && (
             <Button asChild size="sm" variant="outline">
-              <a href={project.href} target="_blank" rel="noopener noreferrer">
-                Live site
-                <ArrowUpRight data-icon="inline-end" />
+              {/* Plain <a> for internal paths too: /storybook is a static build, not a route. */}
+              <a
+                href={project.href}
+                {...(!project.href.startsWith('/') && {
+                  target: '_blank',
+                  rel: 'noopener noreferrer',
+                })}
+              >
+                {project.hrefLabel ?? 'Live site'}
+                {project.href.startsWith('/') ? (
+                  <ArrowRight data-icon="inline-end" />
+                ) : (
+                  <ArrowUpRight data-icon="inline-end" />
+                )}
               </a>
             </Button>
           )}

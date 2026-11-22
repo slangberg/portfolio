@@ -14,21 +14,21 @@ function resolveBaseUrl() {
 }
 
 export const siteConfig = {
-  name: 'Your Name',
-  initials: 'YN',
-  role: 'Software Engineer',
-  location: 'City, Country',
-  email: 'you@example.com',
+  name: 'Sam Langberg',
+  initials: 'SL',
+  role: 'Senior Front-End Engineer',
+  location: 'Decatur, GA',
+  email: 'samuel.langberg@gmail.com',
   /** Optional: path under /public, e.g. '/avatar.jpg'. Initials are shown when empty. */
-  avatar: '',
+  avatar: '/avatar.jpg',
   description:
-    'Software engineer building fast, accessible products for the web. I write about the tools and ideas I use every day.',
+    'Front-end engineer with 10+ years building design systems and shared component libraries in React and TypeScript, taking work from early design through documentation and adoption, with accessibility built in.',
   baseUrl: resolveBaseUrl(),
   /** Pinned repos from this GitHub profile are shown on /projects and the home page. */
   githubUsername: 'slangberg',
   links: {
     github: 'https://github.com/slangberg',
-    linkedin: 'https://www.linkedin.com/in/your-handle',
+    linkedin: 'https://www.linkedin.com/in/samuel-langberg-a2930619/',
     x: '',
   },
   nav: [

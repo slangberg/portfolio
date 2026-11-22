@@ -1,0 +1,38 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Introduction" />
+
+# UI Kit
+
+This is the component library behind this portfolio site. The components are
+[shadcn/ui](https://ui.shadcn.com) components (the **Radix · Nova** style). They
+are **colocated** in the site's repo under `components/ui`, so they are owned
+source code that can be edited like any other file.
+
+## What's here
+
+- **Foundations**: the color tokens, type scale and radii defined in
+  `app/global.css`
+- **Components**: every component in `components/ui`, with interactive controls
+  and auto-generated docs
+
+Use the **paintbrush** button in the toolbar to switch between light and dark
+themes. The **Accessibility** panel runs axe checks against each story.
+
+## Stack
+
+- React 19 and Next.js 16
+- Radix UI primitives for accessible behavior
+- Tailwind CSS v4 with CSS-variable theming
+- `class-variance-authority` for variants
+- Lucide icons and the Geist typeface
+
+## Adding a component
+
+```bash
+npx shadcn@latest add tabs
+```
+
+Then add a `tabs.stories.tsx` file next to it in `components/ui`.
+
+<a href="/" target="_top">← Back to the site</a>

@@ -1,0 +1,50 @@
+---
+title: 'Introducing My New Portfolio'
+publishedAt: '2026-11-22'
+summary: 'A new home for my work, writing and resume, built with Next.js and a colocated shadcn/ui component library, documented in Storybook.'
+tags: [Announcement, Next.js, Design Systems]
+---
+
+I've spent most of my career building design systems and shared component libraries for other teams. This site is the first time in a while I've built one just for myself, and it's where I'll keep my projects, my resume and the occasional post about front-end engineering.
+
+## What's here
+
+- **[Projects](/projects)**: the repos I've pinned on GitHub, plus a few things that don't live in a public repo. The list is pulled from GitHub's API, so it stays in sync with my profile.
+- **[Resume](/resume)**: my experience, skills and education, laid out so it also prints cleanly to a PDF.
+- **[UI Kit](/storybook)**: the Storybook for the components this site is built from.
+- **Writing**: this blog. More to come.
+
+## How it's built
+
+The site is a Next.js 16 app using the App Router, deployed on Vercel. It started from Vercel's blog starter, which I rebuilt around [shadcn/ui](https://ui.shadcn.com).
+
+shadcn/ui isn't a dependency you install and forget. The components are copied into the repo under `components/ui`, so they're source code I own and can change. That makes it a good fit for a personal site, and it's the same "own your primitives" approach I've pushed for on design system teams.
+
+<Callout>
+  Every component in the kit has a story next to it, and the built Storybook ships with the site at [/storybook](/storybook). You can switch themes, change props with interactive controls and run accessibility checks on each component.
+</Callout>
+
+A few other details I care about:
+
+- **Theming through tokens.** Colors, radii and fonts are CSS variables, with light and dark values defined in one place.
+- **Accessibility by default.** Radix primitives handle focus management and keyboard interaction, and each story runs axe checks.
+- **Content as data.** Projects, resume and site details live in typed files under `content/`, and posts are MDX.
+
+For example, the pinned repos come from GitHub, but a local entry can override how one of them is presented:
+
+```ts
+{
+  title: 'mui-svgr-generator',
+  href: 'https://www.npmjs.com/package/mui-svgr-generator',
+  hrefLabel: 'npm package',
+  repo: 'https://github.com/slangberg/MUI-SVG-Icons',
+}
+```
+
+I built the site with Claude Code as a pair programmer. That's how I work day to day: AI tools speed up the scaffolding and the repetitive parts, and I review and test what they produce.
+
+## What's next
+
+I plan to write about the things I spend most of my time on: component API design, theming and token architecture, accessibility, and keeping design and code in step. The [source](https://github.com/slangberg/portfolio) is public if you want to see how it all fits together.
+
+Thanks for stopping by.

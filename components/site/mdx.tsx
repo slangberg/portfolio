@@ -32,7 +32,14 @@ function Table({ data }: { data: { headers: string[]; rows: string[][] } }) {
   )
 }
 
+// Paths that aren't Next.js pages (a static build and a feed), so they need a
+// full page load instead of client-side navigation.
+const NON_PAGE_PATHS = ['/storybook', '/rss']
+
 function CustomLink({ href = '', ...props }: ComponentProps<'a'>) {
+  if (NON_PAGE_PATHS.some((p) => href === p || href.startsWith(`${p}/`))) {
+    return <a href={href} {...props} />
+  }
   if (href.startsWith('/')) return <Link href={href} {...props} />
   if (href.startsWith('#')) return <a href={href} {...props} />
   return <a href={href} target="_blank" rel="noopener noreferrer" {...props} />
@@ -51,7 +58,9 @@ function Code({ children, ...props }: ComponentProps<'code'>) {
 function Callout({ children }: { children: ReactNode }) {
   return (
     <Card className="not-prose my-6 bg-muted/40" size="sm">
-      <CardContent className="text-sm leading-relaxed">{children}</CardContent>
+      <CardContent className="text-sm leading-relaxed [&_a]:font-medium [&_a]:underline [&_a]:decoration-muted-foreground/50 [&_a]:underline-offset-2 [&_a:hover]:decoration-foreground">
+        {children}
+      </CardContent>
     </Card>
   )
 }

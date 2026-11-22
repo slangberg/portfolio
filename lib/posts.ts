@@ -43,6 +43,7 @@ function parseFrontmatter(fileContent: string) {
 }
 
 export function getBlogPosts(): Post[] {
+  if (!fs.existsSync(POSTS_DIR)) return []
   return fs
     .readdirSync(POSTS_DIR)
     .filter((file) => path.extname(file) === '.mdx')

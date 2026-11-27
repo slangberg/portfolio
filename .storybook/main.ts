@@ -1,11 +1,12 @@
 import type { StorybookConfig } from '@storybook/nextjs-vite'
 import { siteConfig } from '../content/site.ts'
+import { palette } from './palette.ts'
 
-const HEADER_HEIGHT = 48
+const HEADER_HEIGHT = 56
 
 /**
- * A slim header bar above the Storybook UI that mirrors the portfolio's header
- * and links back to the site. It lives in the manager's <head> because the
+ * A header bar above the Storybook UI that mirrors the portfolio's header and
+ * links back to the site. It lives in the manager's <head> because the
  * manager is a prebuilt app with no slot of our own above it.
  */
 function siteHeader() {
@@ -19,6 +20,10 @@ function siteHeader() {
         `<a class="sb-site-header__link" href="${href}" target="_top">${escape(label)}</a>`
     )
     .join('')
+  const avatar = siteConfig.avatar
+    ? `<img class="sb-site-header__avatar" src="${siteConfig.avatar}" alt="" onerror="this.remove()" />`
+    : ''
+  const { light: l, dark: d } = palette
 
   return /* html */ `
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,21 +31,28 @@ function siteHeader() {
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --sb-site-bg: #ffffff;
-    --sb-site-fg: #171717;
-    --sb-site-muted: #737373;
-    --sb-site-hover: #f5f5f5;
-    --sb-site-border: #e5e5e5;
+    --sb-site-bg: ${l.bg};
+    --sb-site-fg: ${l.fg};
+    --sb-site-muted: ${l.mutedFg};
+    --sb-site-pill: ${l.muted};
+    --sb-site-active: ${l.card};
+    --sb-site-border: ${l.border};
+    --sb-site-brand: ${l.brand};
+    --sb-site-brand-2: ${l.brand2};
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --sb-site-bg: #0a0a0a;
-      --sb-site-fg: #fafafa;
-      --sb-site-muted: #a3a3a3;
-      --sb-site-hover: #262626;
-      --sb-site-border: rgb(255 255 255 / 0.1);
+      --sb-site-bg: ${d.bg};
+      --sb-site-fg: ${d.fg};
+      --sb-site-muted: ${d.mutedFg};
+      --sb-site-pill: ${d.muted};
+      --sb-site-active: ${d.card};
+      --sb-site-border: ${d.border};
+      --sb-site-brand: ${d.brand};
+      --sb-site-brand-2: ${d.brand2};
     }
   }
+  html, body { background: var(--sb-site-bg); }
   .sb-site-header {
     position: fixed;
     inset: 0 0 auto 0;
@@ -51,34 +63,67 @@ function siteHeader() {
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    padding: 0 16px;
-    background: var(--sb-site-bg);
+    padding: 0 12px 0 16px;
+    background:
+      radial-gradient(40% 140% at 10% 0%, color-mix(in srgb, var(--sb-site-brand) 12%, transparent), transparent 70%),
+      var(--sb-site-bg);
     color: var(--sb-site-fg);
     border-bottom: 1px solid var(--sb-site-border);
     font: 14px/1.4 "Geist", ui-sans-serif, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
+  /* Accent hairline under the bar. */
+  .sb-site-header::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 -1px 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--sb-site-brand) 30%, var(--sb-site-brand-2) 70%, transparent);
+    opacity: 0.5;
+  }
   .sb-site-header__brand {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     min-width: 0;
     color: inherit;
     text-decoration: none;
     font-weight: 600;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
     white-space: nowrap;
   }
-  .sb-site-header__brand:hover .sb-site-header__name { color: var(--sb-site-muted); }
+  .sb-site-header__avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    object-fit: cover;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--sb-site-brand) 35%, transparent);
+    transition: box-shadow 150ms;
+  }
+  .sb-site-header__brand:hover .sb-site-header__avatar {
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--sb-site-brand) 70%, transparent);
+  }
   .sb-site-header__sep { color: var(--sb-site-border); font-weight: 400; }
-  .sb-site-header__kit { color: var(--sb-site-muted); font-weight: 500; }
-  .sb-site-header__nav { display: flex; align-items: center; gap: 4px; }
+  .sb-site-header__kit {
+    background: linear-gradient(100deg, var(--sb-site-brand), var(--sb-site-brand-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .sb-site-header__right { display: flex; align-items: center; gap: 8px; }
+  .sb-site-header__nav {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 4px;
+    border-radius: 12px;
+    background: var(--sb-site-pill);
+  }
   .sb-site-header__link {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    height: 32px;
-    padding: 0 10px;
+    height: 28px;
+    padding: 0 12px;
     border-radius: 8px;
     color: var(--sb-site-muted);
     text-decoration: none;
@@ -86,19 +131,30 @@ function siteHeader() {
     white-space: nowrap;
     transition: background-color 120ms, color 120ms;
   }
-  .sb-site-header__link:hover { background: var(--sb-site-hover); color: var(--sb-site-fg); }
-  .sb-site-header__link:focus-visible,
-  .sb-site-header__brand:focus-visible {
-    outline: 2px solid var(--sb-site-muted);
-    outline-offset: 2px;
-    border-radius: 8px;
+  .sb-site-header__link:hover { color: var(--sb-site-fg); background: var(--sb-site-active); }
+  .sb-site-header__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 34px;
+    padding: 0 12px 0 10px;
+    border-radius: 10px;
+    background: var(--sb-site-fg);
+    color: var(--sb-site-bg);
+    text-decoration: none;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: opacity 120ms;
   }
-  .sb-site-header__back { color: var(--sb-site-fg); }
+  .sb-site-header__back:hover { opacity: 0.85; }
   .sb-site-header__back svg { width: 16px; height: 16px; }
+  .sb-site-header a:focus-visible {
+    outline: 2px solid var(--sb-site-brand);
+    outline-offset: 2px;
+  }
   /* On small screens keep just the brand and the back link. */
-  @media (max-width: 640px) {
-    .sb-site-header__nav .sb-site-header__link:not(.sb-site-header__back) { display: none; }
-    .sb-site-header__sep, .sb-site-header__kit { display: none; }
+  @media (max-width: 720px) {
+    .sb-site-header__nav, .sb-site-header__sep, .sb-site-header__kit { display: none; }
   }
   /* Push the Storybook app below the header. */
   #root {
@@ -114,17 +170,18 @@ function siteHeader() {
     header.className = 'sb-site-header';
     header.innerHTML =
       '<a class="sb-site-header__brand" href="/" target="_top" aria-label="${name} — portfolio home">' +
-        '<span class="sb-site-header__name">${name}</span>' +
+        ${JSON.stringify(avatar)} +
+        '<span>${name}</span>' +
         '<span class="sb-site-header__sep" aria-hidden="true">/</span>' +
         '<span class="sb-site-header__kit">UI Kit</span>' +
       '</a>' +
-      '<nav class="sb-site-header__nav" aria-label="Portfolio">' +
-        ${JSON.stringify(nav)} +
-        '<a class="sb-site-header__link sb-site-header__back" href="/" target="_top">' +
+      '<div class="sb-site-header__right">' +
+        '<nav class="sb-site-header__nav" aria-label="Portfolio">' + ${JSON.stringify(nav)} + '</nav>' +
+        '<a class="sb-site-header__back" href="/" target="_top">' +
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>' +
           'Back to portfolio' +
         '</a>' +
-      '</nav>';
+      '</div>';
     document.body.prepend(header);
   });
 </script>`

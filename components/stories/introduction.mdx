@@ -1,20 +1,58 @@
-import { Meta } from '@storybook/addon-docs/blocks'
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks'
+
+import { Badge } from '../ui/badge'
+import { Button } from '../ui/button'
+import { Eyebrow } from '../site/section-heading'
 
 <Meta title="Introduction" />
 
-# UI Kit
-
-This is the component library behind this portfolio site. The components are
-[shadcn/ui](https://ui.shadcn.com) components (the **Radix · Nova** style). They
-are **colocated** in the site's repo under `components/ui`, so they are owned
-source code that can be edited like any other file.
+<Unstyled>
+  <div className="relative mb-10 overflow-hidden rounded-3xl border bg-background px-8 py-12 font-sans text-foreground">
+    <div aria-hidden className="backdrop-glow absolute inset-0" />
+    <div aria-hidden className="backdrop-grid absolute inset-0" />
+    <div className="relative space-y-5">
+      <Eyebrow>Sam Langberg · Design system</Eyebrow>
+      <h1 className="m-0 text-5xl font-semibold tracking-tighter text-balance">
+        The <span className="text-gradient">UI Kit</span> behind the portfolio.
+      </h1>
+      <p className="m-0 max-w-xl text-lg leading-relaxed text-muted-foreground">
+        shadcn/ui components on Radix primitives, themed with OKLCH design tokens and
+        kept in the repo as owned source code.
+      </p>
+      <div className="flex flex-wrap gap-1.5">
+        {['React 19', 'Next.js 16', 'Radix UI', 'Tailwind CSS v4', 'Storybook'].map((t) => (
+          <Badge key={t} variant="secondary" className="font-normal">
+            {t}
+          </Badge>
+        ))}
+      </div>
+      <div className="flex flex-wrap gap-2 pt-1">
+        <Button asChild size="lg">
+          <a href="/" target="_top">Back to the portfolio</a>
+        </Button>
+        <Button asChild size="lg" variant="outline">
+          <a
+            href="https://github.com/slangberg/portfolio/tree/main/components/ui"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View source
+          </a>
+        </Button>
+      </div>
+    </div>
+  </div>
+</Unstyled>
 
 ## What's here
 
-- **Foundations**: the color tokens, type scale and radii defined in
-  `app/global.css`
-- **Components**: every component in `components/ui`, with interactive controls
-  and auto-generated docs
+- **Foundations**: color tokens (including the brand accent pair), the type
+  scale, radii and the effects used across the site: gradient text, the
+  spotlight border, the page backdrop and frosted surfaces
+- **Components**: every component in `components/ui` (the **Radix · Nova**
+  style of shadcn/ui), with interactive controls and generated docs
+- **Patterns**: site-level building blocks made from those components, such as
+  project cards and section headings
 
 Use the **paintbrush** button in the toolbar to switch between light and dark
 themes. The **Accessibility** panel runs axe checks against each story.
@@ -23,7 +61,7 @@ themes. The **Accessibility** panel runs axe checks against each story.
 
 - React 19 and Next.js 16
 - Radix UI primitives for accessible behavior
-- Tailwind CSS v4 with CSS-variable theming
+- Tailwind CSS v4 with CSS-variable theming in OKLCH
 - `class-variance-authority` for variants
 - Lucide icons and the Geist typeface
 
@@ -34,5 +72,3 @@ npx shadcn@latest add tabs
 ```
 
 Then add a `tabs.stories.tsx` file next to it in `components/ui`.
-
-<a href="/" target="_top">← Back to the site</a>

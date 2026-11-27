@@ -53,7 +53,7 @@ export default async function BlogPostPage({ params }: Props) {
   if (!post) notFound()
 
   return (
-    <article>
+    <article className="mx-auto max-w-3xl">
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -81,12 +81,17 @@ export default async function BlogPostPage({ params }: Props) {
         </Link>
       </Button>
 
-      <header className="space-y-3">
-        <h1 className="text-3xl font-semibold tracking-tight text-balance">
+      <header className="reveal space-y-5">
+        <h1 className="text-4xl font-semibold tracking-tighter text-balance sm:text-5xl">
           {post.metadata.title}
         </h1>
+        {post.metadata.summary && (
+          <p className="text-lg leading-relaxed text-muted-foreground">
+            {post.metadata.summary}
+          </p>
+        )}
         <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-          <time dateTime={post.metadata.publishedAt}>
+          <time dateTime={post.metadata.publishedAt} className="font-mono text-xs">
             {formatDate(post.metadata.publishedAt, true)}
           </time>
           {post.metadata.tags?.map((tag) => (
@@ -97,9 +102,9 @@ export default async function BlogPostPage({ params }: Props) {
         </div>
       </header>
 
-      <Separator className="my-8" />
+      <Separator className="my-10" />
 
-      <div className="prose max-w-none dark:prose-invert">
+      <div className="prose max-w-none prose-lg dark:prose-invert prose-headings:tracking-tight">
         <CustomMDX source={post.content} />
       </div>
     </article>

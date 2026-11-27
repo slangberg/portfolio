@@ -53,7 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
       className={cn(geistSans.variable, geistMono.variable)}
     >
-      <body className="flex min-h-svh flex-col antialiased">
+      <body className="relative isolate flex min-h-svh flex-col antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -61,8 +61,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           disableTransitionOnChange
         >
           <TooltipProvider>
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[640px] overflow-hidden print:hidden"
+            >
+              <div className="backdrop-glow absolute inset-0" />
+              <div className="backdrop-grid absolute inset-0" />
+            </div>
             <SiteHeader />
-            <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-12 sm:py-16 print:py-0">
+            <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-14 sm:py-20 print:py-0">
               {children}
             </main>
             <SiteFooter />

@@ -5,7 +5,7 @@ import { siteConfig } from '@/content/site'
 import { getAllProjects } from '@/lib/github'
 import { Button } from '@/components/ui/button'
 import { PageHeader } from '@/components/site/section-heading'
-import { ProjectCard } from '@/components/site/project-card'
+import { ProjectGrid } from '@/components/site/project-card'
 
 export const metadata: Metadata = {
   title: 'Projects',
@@ -21,21 +21,13 @@ export default async function ProjectsPage() {
   return (
     <section>
       <PageHeader
+        eyebrow="Work"
         title="Projects"
         description="Selected work and side projects, including the repos pinned on my GitHub profile."
       />
-      <div className="grid gap-4 sm:grid-cols-2">
-        {projects.map((project, i) => (
-          <ProjectCard
-            key={project.repo ?? project.title}
-            project={project}
-            // With an odd count, let the first card span both columns.
-            className={i === 0 && projects.length % 2 === 1 ? 'sm:col-span-2' : undefined}
-          />
-        ))}
-      </div>
+      <ProjectGrid projects={projects} />
       {siteConfig.githubUsername && (
-        <div className="mt-8 flex justify-center">
+        <div className="mt-10 flex justify-center">
           <Button asChild variant="outline">
             <a
               href={`https://github.com/${siteConfig.githubUsername}?tab=repositories`}

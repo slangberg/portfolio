@@ -57,7 +57,7 @@ function Code({ children, ...props }: ComponentProps<'code'>) {
 /** <Callout>…</Callout> inside MDX renders as a shadcn Card. */
 function Callout({ children }: { children: ReactNode }) {
   return (
-    <Card className="not-prose my-6 bg-muted/40" size="sm">
+    <Card className="not-prose my-8 bg-brand/5 ring-brand/20" size="sm">
       <CardContent className="text-sm leading-relaxed [&_a]:font-medium [&_a]:underline [&_a]:decoration-muted-foreground/50 [&_a]:underline-offset-2 [&_a:hover]:decoration-foreground">
         {children}
       </CardContent>

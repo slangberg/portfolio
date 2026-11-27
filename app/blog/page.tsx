@@ -9,8 +9,9 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   return (
-    <section>
+    <section className="mx-auto max-w-3xl">
       <PageHeader
+        eyebrow="Writing"
         title="Blog"
         description="Notes and essays on software, tools and craft."
       />

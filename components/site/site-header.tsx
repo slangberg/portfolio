@@ -2,10 +2,11 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu } from 'lucide-react'
+import { Mail, Menu } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 import { siteConfig } from '@/content/site'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
   Sheet,
@@ -25,38 +26,53 @@ export function SiteHeader() {
   const pathname = usePathname()
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60 print:hidden">
-      <div className="mx-auto flex h-14 max-w-3xl items-center justify-between gap-4 px-4">
+    <header className="sticky top-0 z-40 px-4 pt-3 print:hidden">
+      <div className="mx-auto flex h-14 max-w-5xl items-center justify-between gap-4 rounded-2xl border bg-background/70 py-2 pr-2 pl-3 shadow-[0_8px_30px_-12px_rgb(0_0_0/0.12)] backdrop-blur-xl supports-backdrop-filter:bg-background/55 dark:shadow-[0_8px_30px_-12px_rgb(0_0_0/0.6)]">
         <Link
           href="/"
-          className="font-semibold tracking-tight transition-colors hover:text-muted-foreground"
+          className="group flex items-center gap-2.5 font-semibold tracking-tight"
         >
-          {siteConfig.name}
+          <Avatar className="size-8 ring-2 ring-brand/30 transition group-hover:ring-brand/60">
+            {siteConfig.avatar && (
+              <AvatarImage src={siteConfig.avatar} alt="" />
+            )}
+            <AvatarFallback className="text-xs">{siteConfig.initials}</AvatarFallback>
+          </Avatar>
+          <span>{siteConfig.name}</span>
         </Link>
 
-        <div className="flex items-center gap-1">
-          <nav className="hidden items-center gap-1 sm:flex" aria-label="Main">
-            {siteConfig.nav.map((item) => (
-              <Button
+        <nav
+          className="hidden items-center gap-0.5 rounded-xl bg-muted/60 p-1 sm:flex"
+          aria-label="Main"
+        >
+          {siteConfig.nav.map((item) => {
+            const active = isActive(pathname, item.href)
+            return (
+              <Link
                 key={item.href}
-                asChild
-                variant="ghost"
+                href={item.href}
+                aria-current={active ? 'page' : undefined}
                 className={cn(
-                  'text-muted-foreground',
-                  isActive(pathname, item.href) && 'bg-muted text-foreground'
+                  'rounded-lg px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground',
+                  active && 'bg-background text-foreground shadow-sm ring-1 ring-foreground/5'
                 )}
               >
-                <Link
-                  href={item.href}
-                  aria-current={isActive(pathname, item.href) ? 'page' : undefined}
-                >
-                  {item.label}
-                </Link>
-              </Button>
-            ))}
-          </nav>
+                {item.label}
+              </Link>
+            )
+          })}
+        </nav>
 
+        <div className="flex items-center gap-1">
           <ThemeToggle />
+          {siteConfig.email && (
+            <Button asChild className="hidden md:inline-flex">
+              <a href={`mailto:${siteConfig.email}`}>
+                <Mail data-icon="inline-start" />
+                Get in touch
+              </a>
+            </Button>
+          )}
 
           <Sheet>
             <SheetTrigger asChild>

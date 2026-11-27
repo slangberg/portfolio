@@ -33,13 +33,6 @@ export type Education = {
   notes?: string
 }
 
-export type ResumeProject = {
-  name: string
-  url: string
-  urlLabel: string
-  description: string
-}
-
 export const summary =
   'Senior Front-End Engineer with 10+ years building and maintaining production design systems and shared component libraries, evolving them through real-world use across multiple teams and product surfaces. Deep expertise in React, TypeScript, HTML, and CSS, taking interactive, responsive work from early design through implementation, documentation, and adoption. Experienced designing flexible component APIs, primitives, and theming and token architecture that give product teams meaningful control while preserving accessibility (WCAG, WAI-ARIA) and maintainability. Holds a high bar for design-code parity through component documentation sites, visual-regression testing, and close partnership with designers on ambiguous system-level tradeoffs. Has built multi-brand theming and internationalization systems supporting global, localized experiences, and uses AI-assisted development tools as a regular part of engineering work with clear judgment about validating their output. Formally trained in web design, which informs the visual and interaction judgment behind the systems built.'
 
@@ -210,23 +203,6 @@ export const skills: Record<string, string[]> = {
   'AI & Emerging': ['LangChain', 'Claude Code', 'OpenAI', 'Prompt Engineering', 'AI-assisted development'],
   Additional: ['D3.js', 'Highcharts', 'i18n / Internationalization', 'Webpack Module Federation'],
 }
-
-export const personalProjects: ResumeProject[] = [
-  {
-    name: 'mui-svgr-generator',
-    url: 'https://www.npmjs.com/package/mui-svgr-generator',
-    urlLabel: 'npmjs.com/package/mui-svgr-generator',
-    description:
-      'A command-line tool for generating MUI-compatible SVG React components using SVGR, streamlining the conversion of SVG files into Material UI Icon components.',
-  },
-  {
-    name: 'D3 Map Project',
-    url: 'https://github.com/slangberg/d3-map-full-app',
-    urlLabel: 'github.com/slangberg/d3-map-full-app',
-    description:
-      'A full-stack MERN application demonstrating expertise in the D3-ImageMap library for building interactive SVG maps. Built with MongoDB, Express, React, and Node.js, with Docker containerization, serving as the foundation for a planned SaaS platform.',
-  },
-]
 
 /** Optional: put a PDF in /public and set its path here to show a download button. */
 export const resumePdf = ''

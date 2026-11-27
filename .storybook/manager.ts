@@ -1,21 +1,10 @@
 import { addons } from 'storybook/manager-api'
-import { create } from 'storybook/theming/create'
 
-const prefersDark =
-  typeof window !== 'undefined' &&
-  window.matchMedia?.('(prefers-color-scheme: dark)').matches
+import { prefersDark, storybookTheme } from './theme'
 
-// Brand the sidebar as the UI kit. The site header bar (with the link back to
-// the portfolio) is injected by `managerHead` in main.ts.
+// Theme the Storybook UI with the site's palette, following the OS setting
+// like the site does. The site header bar (with the link back to the
+// portfolio) is injected by `managerHead` in main.ts.
 addons.setConfig({
-  theme: create({
-    base: prefersDark ? 'dark' : 'light',
-    brandTitle: 'UI Kit',
-    brandUrl: './index.html',
-    brandTarget: '_self',
-    fontBase: '"Geist", ui-sans-serif, system-ui, sans-serif',
-    fontCode: '"Geist Mono", ui-monospace, monospace',
-    appBorderRadius: 10,
-    inputBorderRadius: 8,
-  }),
+  theme: storybookTheme(prefersDark() ? 'dark' : 'light'),
 })
